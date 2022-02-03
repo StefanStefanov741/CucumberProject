@@ -90,4 +90,8 @@ public class Student extends User {
         this.school_class = schoolclass;
     }
 
+	public String getFullName() {
+		return Fname+" "+Sname+" "+Lname;
+	}
+
 }

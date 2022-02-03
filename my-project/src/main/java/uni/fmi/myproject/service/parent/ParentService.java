@@ -18,6 +18,11 @@ public class ParentService {
 	private static List<Parent> parentsDB = new ArrayList<Parent>();
 	
 	public static void DummyDB() {
+		//изчистване на предишно записаните данни
+		childrenDB.clear();
+		parentsDB.clear();
+		subjectsDB.clear();
+		gradesDB.clear();
 		//създаване на предмети
 		Subject sbj1 = new Subject("Математика");
 		Subject sbj2 = new Subject("Български език");
@@ -127,12 +132,25 @@ public class ParentService {
 		if(st==null) {
 			return "Моля, изберете ученик!";
 		}
-		if(!childrenDB.contains(st)) {
+		boolean childExists = false;
+		for(int i =0; i<childrenDB.size();i++) {
+			if(childrenDB.get(i).getFullName().equals(st.getFullName())) {
+				childExists = true;
+			}
+		}
+		if(!childExists) {
 			return "Избраният ученик не съществува! Моля, опреснете страницата!";
 		}
 		for(int i = 0; i<childrenDB.size();i++) {
-			if(childrenDB.get(i).equals(st)) {
-				if(!childrenDB.get(i).getParents().contains(p)) {
+			if(childrenDB.get(i).getFullName().equals(st.getFullName())) {
+				boolean hasParent = false;
+				ArrayList<Parent> parentsList = new ArrayList<>(childrenDB.get(i).getParents());
+				for(int j=0;j<parentsList.size();j++) {
+					if(parentsList.get(j).GetFullName().equals(p.GetFullName())) {
+						hasParent=true;
+					}
+				}
+				if(!hasParent) {
 					return "Нямате достъп до оценките на този ученик!";
 				}
 				break;
@@ -141,14 +159,14 @@ public class ParentService {
 		if(sub.getName()!=null) {
 			if(gr>=2 && gr<=6) {
 				//Търсене по предмет и оценка
-				if(gradesDB.stream().anyMatch(g-> g.getStudent().equals(st) && g.getSubject().equals(sub) && g.getGrade()==gr)) {
+				if(gradesDB.stream().anyMatch(g-> g.getStudent().getFullName().equals(st.getFullName()) && g.getSubject().equals(sub) && g.getGrade()==gr)) {
 					return "Открити оценки!";
 				}else {
 					return "Няма открити оценки!";
 				}
 			}else {
 				//Търсене само по предмет
-				if(gradesDB.stream().anyMatch(g-> g.getStudent().equals(st) && g.getSubject().equals(sub))) {
+				if(gradesDB.stream().anyMatch(g-> g.getStudent().getFullName().equals(st.getFullName()) && g.getSubject().equals(sub))) {
 					return "Открити оценки!";
 				}else {
 					return "Няма открити оценки!";
@@ -157,14 +175,14 @@ public class ParentService {
 		}else {
 			if(gr>=2 && gr<=6) {
 				//Търсене само по оценка
-				if(gradesDB.stream().anyMatch(g-> g.getStudent().equals(st) && g.getGrade()==gr)) {
+				if(gradesDB.stream().anyMatch(g-> g.getStudent().getFullName().equals(st.getFullName()) && g.getGrade()==gr)) {
 					return "Открити оценки!";
 				}else {
 					return "Няма открити оценки!";
 				}
 			}else {
 				//Търсене само по ученик
-				if(gradesDB.stream().anyMatch(g-> g.getStudent().equals(st))) {
+				if(gradesDB.stream().anyMatch(g-> g.getStudent().getFullName().equals(st.getFullName()))) {
 					return "Открити оценки!";
 				}else {
 					return "Няма открити оценки!";

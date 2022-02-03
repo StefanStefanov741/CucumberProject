@@ -68,5 +68,9 @@ public class Parent extends User {
     public void setPhone(String phone) {
     	this.phone = phone;
     }
+    
+    public String GetFullName() {
+    	return Fname+" "+Lname;
+    }
 
 }

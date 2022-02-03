@@ -16,6 +16,11 @@ public class GradingService {
 	private static List<Grade> gradesDB = new ArrayList<Grade>();
 	
 	public static void DummyDBs() {
+		//изчистване на предишно записаните данни
+		classesDB.clear();
+		studentsDB.clear();
+		subjectsDB.clear();
+		gradesDB.clear();
 		//създаване на предмети
 		Subject sbj1 = new Subject("Математика");
 		Subject sbj2 = new Subject("Български език");
@@ -82,13 +87,31 @@ public class GradingService {
 	
 	public static String AddGrade(SchoolClass schoolclass, Student student, Subject subject, int grade) {
 		DummyDBs();
-		if(!classesDB.contains(schoolclass)) {
+		boolean classExists = false;
+		for(int i = 0; i<classesDB.size();i++) {
+			if(classesDB.get(i).getName().equals(schoolclass.getName())) {
+				classExists = true;
+			}
+		}
+		if(!classExists) {
 			return "Класът, който сте избрали не съществува ! Моля, опреснете страницата!";
 		}
-		if(!subjectsDB.contains(subject)) {
+		boolean subjectExists = false;
+		for(int i = 0; i<subjectsDB.size();i++) {
+			if(subjectsDB.get(i).getName().equals(subject.getName())) {
+				subjectExists = true;
+			}
+		}
+		if(!subjectExists) {
 			return "Предметът, който сте избрали не съществува! Моля, опреснете страницата!";
 		}
-		if(!studentsDB.contains(student)) {
+		boolean studentExists = false;
+		for(int i = 0; i<studentsDB.size();i++) {
+			if(studentsDB.get(i).getFullName().equals(student.getFullName())) {
+				studentExists = true;
+			}
+		}
+		if(!studentExists) {
 			return "Ученикът, който сте избрали не съществува! Моля, опреснете страницата!";
 		}
 		if(grade<2 || grade>6) {
