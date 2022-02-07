@@ -32,9 +32,11 @@ public class GradingSteps {
 	}
 	
 	@When("^Избира оценка: \"([^\"]*)\"$")
-	public void избира_оценка(String grdString) throws Throwable {
+	public void ChooseGrade(String grdString) throws Throwable {
 		int grd = 0;
-		grd=Integer.parseInt(grdString);
+		try {
+			grd=Integer.parseInt(grdString);
+		} catch (NumberFormatException e) { }
 		model.SetGrade(grd);
 	}
 

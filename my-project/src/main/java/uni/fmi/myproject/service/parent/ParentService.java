@@ -156,6 +156,9 @@ public class ParentService {
 				break;
 			}
 		}
+		if(gr<0) {
+			return "Невалидна оценка!";
+		}
 		if(sub.getName()!=null) {
 			if(gr>=2 && gr<=6) {
 				//Търсене по предмет и оценка

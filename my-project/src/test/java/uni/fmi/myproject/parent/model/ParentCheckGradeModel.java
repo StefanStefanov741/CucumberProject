@@ -29,9 +29,13 @@ public class ParentCheckGradeModel {
 	}
 
 	public void setGrade(String grade2) {
-		if(!grade2.equals("") && !grade2.isEmpty()) {
-			this.grade = Integer.parseInt(grade2);
+		if(grade2.equals("") || grade2.isEmpty()) {
+			this.grade = 0;
+			return;
 		}
+		try {
+			this.grade=Integer.parseInt(grade2);
+		} catch (NumberFormatException e) { this.grade = -1;}
 	}
 
 	public void Search() {
